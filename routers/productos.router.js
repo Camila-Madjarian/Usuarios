@@ -1,22 +1,24 @@
 const express = require("express");
 const router = express.Router();
+const controller = require("../controllers/productos.controller");
 
-const productosController = require("../controllers/productos.controller");
 
-router.get('/productos', productosController.getproductos);
 
 module.exports = router;
 
 //método get
-//para todos los usuarios
-router.get('/', controller.allComments);
+//para todos los productos
+router.get('/', controller.allProductos);
 
-//para un usuario
-router.get('/id',controller.showComments);
+//para un producto
+router.get('/id',controller.showProductos);
 
 //método post
-router.post('/', controller.storeComments);
+router.post('/', controller.storeProductos);
 
 //método put
-router.put('/:id_productos', controller.updateComments);
+router.put('/:id_productos', controller.updateProductos);
+
+//método delete
+router.delete("/:id, controller.destroyProductos");
 

@@ -1,22 +1,59 @@
 const express = require("express");
 const router = express.Router();
 
-const usuariosController = require("../controllers/usuarios.controller");
+//MULTER
+const multer = require("multer");
+const path = require("path");
 
-router.get('/usuarios', usuariosController.getusuarios);
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
 
-module.exports = router;
+    cb(null, path.join(__dirname, "imagenes")); 
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); 
+  }, 
+});
 
-//método get
+//configuración del multer
+const uploads = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    console.log(file);
+    const filetypes = /jpg|jpeg|png|webp/; //tipos de archivos
+    const mimetype = filetypes.test(file.mimetype); 
+    const extname = filetypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb(new Error("Tipo de archivo no soportado"));
+    }
+  },
+  limits: { fileSize: 1024 * 1024 * 3 }, 
+});
+
+
+const controller = require("../controllers/usuarios.controller");
+//METODO GET
 //para todos los usuarios
-router.get('/', controller.allComments);
+router.get("/", controller.allUsuarios);
 
 //para un usuario
-router.get('/id',controller.showComments);
+router.get("/:id", controller.showUsuario);
 
-//método post
-router.post('/', controller.storeComments);
+//METODO POST
+router.post("/", uploads.single("imagen"), controller.storeUsuario); //
 
-//método put
-router.put('/:id_usuarios', controller.updateComments);
 
+// METODO PUT 
+// router.put("/:id", upload.single("imagen"), controller.updateUsuario);
+
+// METODO DELETE 
+// router.delete("/:id", controller.destroyUsuario);
+
+// router.post("/login", controller.login);
+
+//exportar las rutas,routers
+module.exports = router;
