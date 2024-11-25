@@ -41,10 +41,10 @@ const controller = require("../controllers/usuarios.controller");
 router.get("/", controller.allUsuarios);
 
 //para un usuario
-router.get("/:id", controller.showUsuario);
+router.get("/:id", controller.showUsuarios);
 
 //METODO POST
-router.post("/", uploads.single("imagen"), controller.storeUsuario); //
+router.post("/", uploads.single("imagen"), controller.storeUsuarios); //
 
 
 // METODO PUT 

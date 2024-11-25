@@ -20,7 +20,7 @@ const allUsuarios = (req, res) => {
 
 //METODO GET consultar un usuario especifico
 
-const showUsuario = (req, res) => {
+const showUsuarios = (req, res) => {
   const { id } = req.params;
   const sql = "SELECT * FROM usuarios WHERE id_usuario = ?"; 
   db.query(sql, [id], (error, rows) => {
@@ -43,7 +43,7 @@ const showUsuario = (req, res) => {
 
 
 
-const storeUsuario = (req, res) => {
+const storeUsuarios = (req, res) => {
   console.log(req.file);
   let fotoAsubir = ""; 
   if (req.file) {
@@ -63,7 +63,7 @@ const storeUsuario = (req, res) => {
       if (error) {
         return res.status(500).json({ error: "Error al registrar usuario, intente luego" });
       }
-      const usuario = {
+      const usuarios = {
         ...req.body,
         id: result.insertId,
         nombre,
@@ -72,7 +72,7 @@ const storeUsuario = (req, res) => {
         contraseña,
         foto: fotoAsubir,
       };
-      res.status(201).json(usuario);
+      res.status(201).json(usuarios);
     }
   );
 };
@@ -174,6 +174,6 @@ const storeUsuario = (req, res) => {
 //exportar todas las funciones del modulo para las rutas
 module.exports = {
   allUsuarios,
-  showUsuario,
-  storeUsuario, 
+  showUsuarios,
+  storeUsuarios, 
 };
