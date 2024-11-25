@@ -1,11 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tablas</title>
-</head>
-<body>
-    
-</body>
-</html>
+const express = require("express");
+const path = require("path");
+const app = express();
+
+app.use(express.json());
+
+// require("dotenv").config();
+//ruta principal
+app.get("/", (req, res) => {
+  res.send("hola Usuario");
+});
+
+app.use("/imagenes", express.static(path.join(__dirname, "imagenes")));
+
+//Rutas para productos
+const productosRouter = require("./routers/productos.router");
+app.use("/productos", productosRouter);
+
+// Rutas para postres
+const postresRouter = require("./routers/postres.router");
+app.use("/postres", postresRouter);
+
+// Rutas para guarniciones
+const guarnicionesRouter = require("./routers/guarniciones.router");
+app.use("/guarniciones", guarnicionesRouter);
+
+// Rutas para giftcards
+const giftcardsRouter = require("./routers/giftcards.router");
+app.use("/giftcards", giftcardsRouter);
+
+//Rutas para bebidas
+const bebidasRouter = require("./routers/bebidas.router");
+app.use("/bebidas", bebidasRouter);
+
+//Rutas para usuarios
+const usuariosRouter = require("./routers/usuarios.router");
+app.use("/usuarios", usuariosRouter);
+
+// const authRouter = require("./routers/auth.router");
+// app.use("/auth", authRouter);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
