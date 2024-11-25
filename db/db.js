@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "usuarios"
+    database: "usuarios_camila"
 
 });
 
@@ -20,3 +20,7 @@ connection.connect((error)=>{
    console.log("Estas conectada a la base de datos"); 
 
 });
+
+
+// EXPORTAR DEL MODULO LA FUNCION CONNECTION
+module.exports = connection;

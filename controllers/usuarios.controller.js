@@ -22,7 +22,7 @@ const allUsuarios = (req, res) => {
 
 const showUsuarios = (req, res) => {
   const { id } = req.params;
-  const sql = "SELECT * FROM usuarios WHERE id_usuario = ?"; 
+  const sql = "SELECT * FROM usuarios WHERE id = ?"; 
   db.query(sql, [id], (error, rows) => {
     
     console.log(rows); 
@@ -44,20 +44,34 @@ const showUsuarios = (req, res) => {
 
 
 const storeUsuarios = (req, res) => {
+
   console.log(req.file);
+
   let fotoAsubir = ""; 
   if (req.file) {
   
     fotoAsubir = `/imagenes/${req.file.filename}`; 
   }
 
-  const { id, nombre, apellido, email, contraseña, foto} = req.body; 
+  console.log(req.body);
+
+  const {nombre, apellido, email, contrasena} = req.body; 
+
+  console.log(nombre);
+  console.log(apellido);
+  console.log(email);
+  console.log(contrasena);
+
+  console.log(fotoAsubir);
 
   const sql =
-    "INSERT INTO usuarios (id, nombre, apellido, email, contraseña, foto) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO usuarios (nombre, apellido, email, contraseña, foto) VALUES (?, ?, ?, ?, ?)";
+  
+  console.log(sql);
+
   db.query(
     sql,
-    [id, nombre, apellido, email, contraseña, fotoAsubir], 
+    [nombre, apellido, email, contrasena, fotoAsubir], 
     (error, result) => {
       console.log(result);
       if (error) {
@@ -69,7 +83,7 @@ const storeUsuarios = (req, res) => {
         nombre,
         apellido,
         email,
-        contraseña,
+        contrasena,
         foto: fotoAsubir,
       };
       res.status(201).json(usuarios);

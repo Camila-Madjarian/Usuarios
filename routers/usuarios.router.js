@@ -8,7 +8,7 @@ const path = require("path");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
 
-    cb(null, path.join(__dirname, "imagenes")); 
+    cb(null, "imagenes"); 
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname)); 
@@ -44,7 +44,7 @@ router.get("/", controller.allUsuarios);
 router.get("/:id", controller.showUsuarios);
 
 //METODO POST
-router.post("/", uploads.single("imagen"), controller.storeUsuarios); //
+router.post("/", uploads.single("foto"), controller.storeUsuarios); //
 
 
 // METODO PUT 
